@@ -83,6 +83,17 @@ const styles = StyleSheet.create({
     },
     textBtnAtividades:{
       color: '#fff',
+    },
+    contentTask:{
+      color: '#fff'
+    },
+    descricao:{
+      fontSize: 20,
+      color: '#fff'
+    },
+    date:{
+      fontSize: 18,
+      color: '#efefef'
     }
 
     
