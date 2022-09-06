@@ -25,16 +25,16 @@ export default function NewTask({ navigation, route }, props) {
     if(description === null){
         Alert.alert('Preencha a descrição')
         return
-    }
-    if(dateTask === null){
+    }else if(dateTask === null){
         Alert.alert('Preencha a data')
         return
+    }else{
+      database.collection(userID).add({
+        description: description,
+        status: false,
+        timestamp: `${dateTask}`,
+      });
     }
-    database.collection(userID).add({
-      description: description,
-      status: false,
-      timestamp: dateTask ? `${dateTask}` : `${new Date()}`,
-    });
     navigation.navigate("Task");
   }
 
@@ -48,7 +48,9 @@ export default function NewTask({ navigation, route }, props) {
         value={description}
       />
 
-      <CalendarPicker onDateChange={(e) => setDateTask(e)} />
+      <CalendarPicker 
+      onDateChange={(e) => setDateTask(e)}
+      />
 
       <TouchableOpacity
         style={styles.buttonNewTask}

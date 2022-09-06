@@ -3,6 +3,7 @@ import {  KeyboardAvoidingView, TextInput, TouchableOpacity, View, Text } from "
 import styles from "./style";
 import firebase from "../../config/firebaseconfig"
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function NewUser( { navigation } ){
 
@@ -12,8 +13,9 @@ export default function NewUser( { navigation } ){
 
     const register = ()=>{
         firebase.auth().createUserWithEmailAndPassword(email, password)
-            .then((userCredential) => {
+            .then( async (userCredential) => {
             let user = userCredential.user;
+            await AsyncStorage.setItem('idUser', user.uid)
             navigation.navigate("Task", { idUser: user.uid })
         })
 

@@ -9,6 +9,7 @@ import Details from "./src/pages/Details";
 
 import NewUser from "./src/pages/NewUser";
 import Login from "./src/pages/Login";
+import Encerradas from "./src/pages/encerradas";
 
 const Stack = createStackNavigator()
 
@@ -24,6 +25,14 @@ export default function App() {
             headerShown: false
         }}
         />
+
+        <Stack.Screen
+          name="Encerradas"
+          component={Encerradas}
+          options={{
+            headerTintColor: "#5568fc",
+        }}
+        />  
 
         <Stack.Screen
           name="NewUser"

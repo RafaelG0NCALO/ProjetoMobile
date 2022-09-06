@@ -6,7 +6,7 @@ import styles from "./style";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AntDesign } from '@expo/vector-icons';
 
-export default function Task({ navigation, route }) {
+export default function Encerradas({ navigation, route }) {
   const [userID, setUserID] = useState("");
   const [task, setTask] = useState([]);
   const database = firebase.firestore();
@@ -43,9 +43,9 @@ export default function Task({ navigation, route }) {
     //math ceil converte numeros para cima, arredonda
     const days = Math.ceil((updatedTime - now) / (1000 * 3600 * 24)) // calcula os dias
 
-    if(days >= 3 && !days <= 2 ){
+    if(days >= 3 && !days <= 2){
       color = '#7cbc7c';
-    }else if(days >= 2 && !days <= 1){
+    }else if(days >= 1 && !days <= 3) {
       color = "#f7a334";
     }else {
       color = '#ff6961';
@@ -96,7 +96,8 @@ export default function Task({ navigation, route }) {
     <View style={styles.container}>
       <View style={styles.viewTabs}>
 
-        <TouchableOpacity style={styles.btnAtividades}>
+        <TouchableOpacity style={styles.btnAtividades}
+        onPress={()=> navigation.navigate("Task")}>
           <Text style={styles.textBtnAtividades}>Atividades</Text>
         </TouchableOpacity>
 
@@ -110,10 +111,11 @@ export default function Task({ navigation, route }) {
         showsVerticalScrollIndicator={false}
         data={task}
         renderItem={({ item }) => {
-           
-          if(!item.days){
+          
+          if(item.days){
             return
           }
+
           return (
             <View style={styles.Tasks}>
               <TouchableOpacity
@@ -154,8 +156,8 @@ export default function Task({ navigation, route }) {
                   <AntDesign name="clockcircleo" size={18} color="#ebf3e7" />
                     {" "}
                     {new Date(parseInt(item?.timestamp)).getDate()}/
-                    {new Date(parseInt(item?.timestamp)).getMonth()}/
-                    {new Date(parseInt(item?.timestamp)).getFullYear()} 
+                {new Date(parseInt(item?.timestamp)).getMonth()}/
+                {new Date(parseInt(item?.timestamp)).getFullYear()} 
                   </Text>
               </View>
 
@@ -164,15 +166,7 @@ export default function Task({ navigation, route }) {
           );
         }}
       />
-      <TouchableOpacity
-        style={styles.buttonNewTask}
-        onPress={() =>
-          navigation.navigate("New Task", { idUser: route.params?.idUser })
-        }
-      >
-        <Text style={styles.iconButton}>+</Text>
-      </TouchableOpacity>
-
+    
       <TouchableOpacity
         style={styles.buttonLogout}
         onPress={() => {
